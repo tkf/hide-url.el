@@ -36,7 +36,7 @@
 (defvar hide-url/offset-end 10)
 
 (defun hide-url/hide-all ()
-  "Hide all URLs"
+  "Hide all URLs."
   (interactive)
   (with-silent-modifications
     (save-excursion
@@ -45,7 +45,7 @@
         (hide-url/hide-at-point)))))
 
 (defun hide-url/show-all ()
-  "Show all hidden URLs"
+  "Show all hidden URLs."
   (interactive)
   (with-silent-modifications
     (let ((beg) (end (point-min)))
@@ -57,7 +57,7 @@
           (hide-url/remove-text-properties beg end))))))
 
 (defun hide-url/hide-at-point ()
-  "Replace URL at point with something like 'https://gi....ide-url.el'"
+  "Replace URL at point with something like 'https://gi....ide-url.el'."
   (let ((bounds (thing-at-point-bounds-of-url-at-point)))
     (when bounds
       (let ((hide-beg (+ (car bounds) hide-url/offset-beg))
@@ -66,6 +66,7 @@
           (hide-url/put-text-properties hide-beg hide-end))))))
 
 (defun hide-url/put-text-properties (beg end)
+  "Hide a region between BEG and END."
   (add-text-properties
    beg end
    '(display
@@ -74,6 +75,7 @@
      t)))
 
 (defun hide-url/remove-text-properties (beg end)
+  "Show a hidden region between BEG and END."
   (remove-list-of-text-properties
    beg end
    '(display hide-url/hidden)))
