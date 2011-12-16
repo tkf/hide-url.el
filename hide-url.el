@@ -38,6 +38,16 @@
 (defvar hide-url/offset-beg 10)
 (defvar hide-url/offset-end 10)
 
+(defvar hide-url/displayed t)
+(make-variable-buffer-local 'hide-url/displayed)
+
+(defun hide-url/toggle-all ()
+  "Toggle display of all URLs in current buffer."
+  (interactive)
+  (if hide-url/displayed
+      (hide-url/hide-all)
+    (hide-url/show-all)))
+
 (defun hide-url/hide-all ()
   "Hide all URLs."
   (interactive)
@@ -45,7 +55,8 @@
     (save-excursion
       (beginning-of-buffer)
       (while (search-forward-regexp thing-at-point-url-regexp nil t)
-        (hide-url/hide-at-point)))))
+        (hide-url/hide-at-point))))
+  (setq hide-url/displayed nil))
 
 (defun hide-url/show-all ()
   "Show all hidden URLs."
@@ -57,7 +68,8 @@
         (setq end (when beg
                     (next-single-property-change beg 'hide-url/hidden)))
         (when end
-          (hide-url/remove-text-properties beg end))))))
+          (hide-url/remove-text-properties beg end)))))
+  (setq hide-url/displayed t))
 
 (defun hide-url/hide-at-point ()
   "Replace URL at point with something like 'https://gi....ide-url.el'."
