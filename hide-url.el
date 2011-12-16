@@ -32,6 +32,9 @@
 
 ;;; Code:
 
+(require 'thingatpt)
+
+
 (defvar hide-url/offset-beg 10)
 (defvar hide-url/offset-end 10)
 
@@ -79,5 +82,8 @@
   (remove-list-of-text-properties
    beg end
    '(display hide-url/hidden)))
+
+
+(provide 'hide-url)
 
 ;;; hide-url.el ends here
